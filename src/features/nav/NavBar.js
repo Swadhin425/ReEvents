@@ -20,6 +20,7 @@ const NavBar = ({ setFormOpen }) => {
                         <img src="/assets/logo.png" alt="logo" />
                     </Menu.Item>
                     <Menu.Item as={NavLink} to='/events' name='Fakebook' />
+                    <Menu.Item as={NavLink} to='/sandbox' name='Sandbox' />
                     <Menu.Item as={NavLink} to='/createEvent'>
                         <Button positive inverted content="Create Event" />
                     </Menu.Item>

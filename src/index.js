@@ -1,18 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import  "semantic-ui-css/semantic.min.css";
+import "semantic-ui-css/semantic.min.css";
 import './app/layout/stylee.css';
 import App from './app/layout/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { configureStore } from './app/store/configureStore';
+import ScrollToTop from './app/layout/ScrollToTop';
+
+const store = configureStore();
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <BrowserRouter>
-    <App />
+    <ScrollToTop/>
+      <App />
     </BrowserRouter>
-    
-  </React.StrictMode>,
+  </Provider>
+  ,
   document.getElementById('root')
 );
 

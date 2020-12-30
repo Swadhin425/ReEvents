@@ -1,13 +1,17 @@
 import cuid from 'cuid';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { Button, Form, Header, Segment } from 'semantic-ui-react'
+import { Button, Form, Header, Segment } from 'semantic-ui-react';
+import {useDispatch, useSelector} from 'react-redux';
+import {createEvent,updateEvent} from '../eventActions'
 
-const EventForm = ({ setFormOpen, setEvents ,createEvent,selectedEvent,updateEvent}) => {
-    console.log(selectedEvent )
-    console.log("form value" )
-
-    const initialValues =selectedEvent ?? {
+const EventForm = ({
+    match,
+    history
+}) => {
+    const dispatch=useDispatch();
+    const selectedEvent = useSelector(state => state.event.events.find(e => e.id === match.params.id));
+    const initialValues = selectedEvent ?? {
         title: '',
         category: '',
         description: '',
@@ -19,9 +23,10 @@ const EventForm = ({ setFormOpen, setEvents ,createEvent,selectedEvent,updateEve
     const [values, setValues] = useState(initialValues);
 
     function handleFormSubmit() {
-        selectedEvent ? updateEvent({...selectedEvent,...values})
-        :createEvent({...values,id:cuid(),hostedBy:'Bob',attendees:[],hostPhotoURL:'/assets/user.png'});
-        setFormOpen(false)
+        selectedEvent ?dispatch(updateEvent({ ...selectedEvent, ...values }))
+            : dispatch(createEvent({ ...values, id: cuid(), hostedBy: 'Bob', attendees: [], hostPhotoURL: '/assets/user.png' }));
+            history.push('/events')
+      
     }
 
     function handleInputChange(e) {
@@ -30,7 +35,7 @@ const EventForm = ({ setFormOpen, setEvents ,createEvent,selectedEvent,updateEve
     }
     return (
         <Segment clearing>
-            <Header content={selectedEvent?"Edit the event":"Create new Events"} />
+            <Header content={selectedEvent ? "Edit the event" : "Create new Events"} />
             <Form onSubmit={handleFormSubmit}>
                 <Form.Field>
                     <input type="text" placeholder='Event title' name='title' value={values.title} onChange={e => handleInputChange(e)} />

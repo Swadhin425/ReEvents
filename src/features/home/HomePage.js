@@ -7,7 +7,7 @@ const HomePage = ({history}) => {
        <Container>
            <Header as='h1' inverted>
             <Image size='massive' src='/assets/logo.png' style={{marginBottom:12}}/>
-            Re-vents
+            Fakebook
            </Header>
            <Button onClick={()=>history.push('/events')} size='huge' inverted>
             Get started
